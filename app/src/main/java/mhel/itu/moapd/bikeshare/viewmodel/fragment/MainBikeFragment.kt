@@ -40,8 +40,8 @@ class MainBikeFragment : Fragment() {
 
     private lateinit var userViewModel : CurrentUser
     private lateinit var timer : Timer
-    private var startTime : Long = 0
-    private var rate : Float = 0f
+    private var startTime : Long? = 0
+    private var rate : Float? = 0f
     private lateinit var viewRef : View
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -105,6 +105,8 @@ class MainBikeFragment : Fragment() {
                 val updatedUsr = AccountRepository.endRide(usr.id, price)
                 userViewModel.activeRide.postValue(null)
                 userViewModel.balance.postValue(updatedUsr!!.balance);
+                this.rate = null
+                this.startTime = null
 
             } else return false
         } else return false
@@ -116,20 +118,25 @@ class MainBikeFragment : Fragment() {
         timer.schedule(object : TimerTask() {
             override fun run() {
                 activity!!.runOnUiThread {
-                    updateElapsed()
+                    if(rate == null || startTime == null) this.cancel()
+                    else updateElapsed()
                 }
             }
         }, 1000, 1000)
     }
 
     private fun updateElapsed() {
-        val delta = System.currentTimeMillis() - startTime;
+        if(rate == null || startTime == null) return
+        val delta = System.currentTimeMillis() - startTime!!;
         this.rideElapsedLabel.text = ConversionManager.msToTimeString(delta)
-        val price = priceElapsed(delta, rate)
+        val price = priceElapsed(delta, rate!!)
         this.ridePriceElapsedLabel.text = formatCurrencyToDkk(price)
         var deltaBalance = userViewModel.balance.value!!.minus(price)
         if(deltaBalance.compareTo(0) == 0 || deltaBalance.compareTo(0) == -1) {
             handleEndRide()
+            timer.cancel();
+            timer.purge();
+            timer = Timer()
             Toast.makeText(viewRef.context, "Ride ended, you ran out of money!", Toast.LENGTH_LONG).show()
         }
     }
@@ -146,7 +153,9 @@ class MainBikeFragment : Fragment() {
             setTimerTask()
         } else {
             this.currentRideContainer.visibility = View.GONE
-            timer.cancel()
+            timer.cancel();
+            timer.purge();
+            timer = Timer()
         }
     }
 

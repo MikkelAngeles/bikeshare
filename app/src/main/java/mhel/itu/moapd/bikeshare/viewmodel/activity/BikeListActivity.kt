@@ -51,6 +51,9 @@ class BikeListActivity : AppCompatActivity() {
         if(user?.activeRide != null) {
             Toast.makeText(this.applicationContext, "You are already renting a bike!", Toast.LENGTH_LONG).show()
             return
+        } else if (user?.balance!!.compareTo(0) == 0 || user.balance!!.compareTo(0) == -1) {
+            Toast.makeText(this.applicationContext, "You have no money, add funds.", Toast.LENGTH_LONG).show()
+            return
         }
 
         if(BikeRepository.lockBike(b.id)) {
