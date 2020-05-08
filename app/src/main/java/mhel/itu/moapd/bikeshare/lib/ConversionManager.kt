@@ -13,10 +13,22 @@ object ConversionManager {
         return String.format("%02d:%02d:%02d", hrs, min, sec)
     }
 
-    fun priceElapsed(millis : Long, rate : Float) : String {
+    fun priceElapsed(millis : Long, rate : Float) : Float {
         val hr = TimeUnit.MILLISECONDS.toSeconds(millis).toFloat()
-        val price = hr * ((rate/60)/60)
-        return formatCurrencyToDkk(price)
+        return hr * ((rate/60)/60)
+    }
+
+    fun priceElapsedFormat(millis : Long, rate : Float) : String {
+        return formatCurrencyToDkk(priceElapsed(millis, rate))
+    }
+
+    fun timeDelta(d1 : Long?, d2 :Long?) : Long? {
+        if (d1 != null) {
+            if (d2 != null) {
+                return d1.minus(d2)
+            }
+        }
+       return null;
     }
 
     fun formatCurrencyToDkk(rate: Float) : String {

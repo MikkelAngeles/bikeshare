@@ -74,13 +74,13 @@ object AccountRepository {
         return true;
     }
 
-    fun endRide(id : Long?, price : Float?) : Boolean {
-        val rs = find(id) ?: return false
+    fun endRide(id : Long?, price : Float?) : Account? {
+        val rs = find(id) ?: return null
         realm().executeTransaction {
             rs.balance         = rs.balance!!.minus(price!!)
             rs.activeRide      = null
         }
-        return true;
+        return rs;
     }
 
 

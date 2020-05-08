@@ -24,6 +24,9 @@ import mhel.itu.moapd.bikeshare.viewmodel.activity.AddBikeActivity
 import mhel.itu.moapd.bikeshare.viewmodel.activity.BikeListActivity
 import mhel.itu.moapd.bikeshare.viewmodel.activity.RideHistoryActivity
 import mhel.itu.moapd.bikeshare.lib.ConversionManager
+import mhel.itu.moapd.bikeshare.lib.ConversionManager.formatCurrencyToDkk
+import mhel.itu.moapd.bikeshare.lib.ConversionManager.priceElapsed
+import mhel.itu.moapd.bikeshare.lib.ConversionManager.timeDelta
 import java.util.*
 
 
@@ -39,8 +42,10 @@ class MainBikeFragment : Fragment() {
     private lateinit var timer : Timer
     private var startTime : Long = 0
     private var rate : Float = 0f
+    private lateinit var viewRef : View
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewRef = view
         userViewModel = ViewModelProviders.of(this).get(CurrentUser::class.java)
         this.registerObservers()
         this.registerEventListeners()
@@ -71,44 +76,48 @@ class MainBikeFragment : Fragment() {
                     // Respond to neutral button press
                 }
                 .setPositiveButton(resources.getString(R.string.endRide)) { dialog, which ->
-
-                    val usr = AccountRepository.find(userViewModel.id.value?:0)
-                    if(usr != null) {
-                        val ride = RideRepository.find(usr.activeRide)
-                        if(ride != null) {
-                            val endLocation = ""
-                            val endTime = System.currentTimeMillis();
-                            val price = 0f;
-                            val time = (endTime.minus(ride.startTime ?: 0))
-
-                            RideRepository.endRide(
-                                ride.id,
-                                endLocation,
-                                endTime,
-                                price,
-                                time
-                            )
-                            BikeRepository.unlock(ride.bikeId)
-                            AccountRepository.endRide(usr.id, price)
-
-                            userViewModel.activeRide.postValue(null)
-                            userViewModel.balance.postValue(usr.balance);
-                            Toast.makeText(view.context, "Ride ended", Toast.LENGTH_LONG).show()
-                        }
-                    }
-                    Toast.makeText(view.context, "Something went wrong", Toast.LENGTH_LONG).show()
+                    if(handleEndRide()) Toast.makeText(view.context, "Ride ended", Toast.LENGTH_LONG).show()
+                    else Toast.makeText(view.context, "Something went wrong", Toast.LENGTH_LONG).show()
                 }
                 .show()
         }
+    }
+
+    private fun handleEndRide() : Boolean {
+        val usr = AccountRepository.find(userViewModel.id.value?:0)
+        if(usr != null) {
+            val ride = RideRepository.find(usr.activeRide)
+            if(ride != null) {
+                val endLocation = ""
+                val endTime = System.currentTimeMillis();
+                val time    = timeDelta(endTime, ride.startTime)
+                val price   = priceElapsed(time?:0, ride.rate?:0f)
+
+                RideRepository.endRide(
+                    ride.id,
+                    endLocation,
+                    endTime,
+                    price,
+                    time
+                )
+                if(!BikeRepository.unlock(ride.bikeId)) return false
+
+                val updatedUsr = AccountRepository.endRide(usr.id, price)
+                userViewModel.activeRide.postValue(null)
+                userViewModel.balance.postValue(updatedUsr!!.balance);
+
+            } else return false
+        } else return false
+        return true
     }
 
     private fun setTimerTask() {
         timer = Timer()
         timer.schedule(object : TimerTask() {
             override fun run() {
-                activity!!.runOnUiThread(Runnable {
+                activity!!.runOnUiThread {
                     updateElapsed()
-                })
+                }
             }
         }, 1000, 1000)
     }
@@ -116,7 +125,13 @@ class MainBikeFragment : Fragment() {
     private fun updateElapsed() {
         val delta = System.currentTimeMillis() - startTime;
         this.rideElapsedLabel.text = ConversionManager.msToTimeString(delta)
-        this.ridePriceElapsedLabel.text = ConversionManager.priceElapsed(delta, rate)
+        val price = priceElapsed(delta, rate)
+        this.ridePriceElapsedLabel.text = formatCurrencyToDkk(price)
+        var deltaBalance = userViewModel.balance.value!!.minus(price)
+        if(deltaBalance.compareTo(0) == 0 || deltaBalance.compareTo(0) == -1) {
+            handleEndRide()
+            Toast.makeText(viewRef.context, "Ride ended, you ran out of money!", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun setActiveRide(rideId : Long?) {
@@ -126,7 +141,7 @@ class MainBikeFragment : Fragment() {
             this.startTime = ride!!.startTime!!
             this.rate = ride.rate?:0f;
             this.currentRideLabel.text = "Renting ${ride.name}"
-            this.rideElapsedLabel.text = "${ride!!.startTime}"
+            this.rideElapsedLabel.text = "${ride.startTime}"
             this.ridePriceElapsedLabel.text = rate.toString()
             setTimerTask()
         } else {
