@@ -34,7 +34,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#388E3C"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    tools:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -60,13 +61,13 @@
                             android:paddingBottom="5dp">
 
                             <LinearLayout
-                                android:layout_width="90dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
 
                                 <LinearLayout
-                                    android:layout_width="60dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:orientation="horizontal">
@@ -87,16 +88,18 @@
                                     android:id="@+id/rideElapsedLabel"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:paddingRight="10dp"
                                     android:text="00:00:00" />
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="80dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:orientation="horizontal">
 
                                 <LinearLayout
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:orientation="horizontal">
@@ -117,9 +120,9 @@
                                     android:id="@+id/ridePriceElapsedLabel"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:text="123 dk" />
+                                    android:paddingLeft="10dp"
+                                    android:paddingRight="10dp"
+                                    android:text="10.3927 kr" />
                             </LinearLayout>
                         </LinearLayout>
 

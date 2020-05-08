@@ -179,7 +179,7 @@ class MainBikeFragment : Fragment() {
         userViewModel.name.observe(this, Observer { newName -> this.userNameLabel.text = newName; })
         userViewModel.rides.observe(this,  Observer { newCount -> this.ridesCountLabel.text = newCount.toString(); })
         userViewModel.balance.observe(this,  Observer { newBalance ->
-            this.balanceValue.text = ConversionManager.formatCurrencyToDkk(newBalance)
+            this.balanceValue.text = formatCurrencyToDkk(newBalance)
         })
 
         userViewModel.activeRide.observe(this,  Observer { newRide ->

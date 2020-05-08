@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_add_bike.*
 import mhel.itu.moapd.bikeshare.R
 import mhel.itu.moapd.bikeshare.lib.GpsManager
@@ -58,28 +59,57 @@ class AddBikeActivity : AppCompatActivity() {
 
     private fun registerEventListeners() {
         this.addBikeSubmitBtn.setOnClickListener {
-            val currLoc = this.gpsManager.requestLocationUpdates()
-            val lon = currLoc?.longitude.toString().toFloatOrNull();
-            val lat = currLoc?.latitude.toString().toFloatOrNull();
+            if(validateInput()) {
+                val currLoc = this.gpsManager.requestLocationUpdates()
+                val lon = currLoc?.longitude.toString().toFloatOrNull();
+                val lat = currLoc?.latitude.toString().toFloatOrNull();
 
-            BikeRepository.add(
-                Bike(
-                    name        = name.text.toString(),
-                    type        = type.text.toString(),
-                    location    = location.text.toString(),
-                    rate        = rate.text.toString().toFloatOrNull(),
-                    image       = ImageManager.bitmapToByteArray(this.bitmapImage as Bitmap),
-                    isAvailable = true,
-                    lon         = lon,
-                    lat         = lat
+                val rs = BikeRepository.add(
+                    Bike(
+                        name = name.text.toString(),
+                        type = type.text.toString(),
+                        location = location.text.toString(),
+                        rate = rate.text.toString().toFloatOrNull(),
+                        image = ImageManager.bitmapToByteArray(this.bitmapImage as Bitmap),
+                        isAvailable = true,
+                        lon = lon,
+                        lat = lat
+                    )
                 )
-            )
-            finish();
+                if(rs != null ) {
+                    finish();
+                    Toast.makeText(
+                        this.applicationContext,
+                        "Bike added",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        this.applicationContext,
+                        "Something went wrong",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            } else {
+                Toast.makeText(
+                    this.applicationContext,
+                    "Form is not filled out correctly",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
 
         this.uploadBikeImageBtn.setOnClickListener {
             this.dispatchTakePictureIntent()
         }
+    }
+
+    private fun validateInput() : Boolean {
+        if (this.name.text.isBlank()) return false
+        if (this.type.text.isBlank()) return false
+        if (this.rate.text.isBlank() || this.rate.text.toString().toFloatOrNull() == null) return false
+        if (this.bitmapImage == null) return false
+        return true
     }
 
     private fun dispatchTakePictureIntent() {

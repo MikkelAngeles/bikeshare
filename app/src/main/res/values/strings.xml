@@ -20,4 +20,7 @@
     <string name="rideHistoryHeader">Ride history</string>
     <string name="rideHistoryCoulbLabel">You have 0 rides</string>
     <string name="rideEmptyState">You haven\'t rented any bikes yet. Once you have rented a bike, it will displayed here.</string>
+    <string name="startRideTitle">Confirm start ride</string>
+    <string name="confirm_start_title">You are about to start renting a bike. Please confirm</string>
+    <string name="startRide">Let\'s go!</string>
 </resources>

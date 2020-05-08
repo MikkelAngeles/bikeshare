@@ -1,25 +1,23 @@
 package mhel.itu.moapd.bikeshare.viewmodel.activity
 
 import android.app.Activity
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_bike_list.*
 import mhel.itu.moapd.bikeshare.R
-import mhel.itu.moapd.bikeshare.lib.ImageManager
 import mhel.itu.moapd.bikeshare.model.entity.Bike
 import mhel.itu.moapd.bikeshare.model.entity.Ride
 import mhel.itu.moapd.bikeshare.model.repository.AccountRepository
+import mhel.itu.moapd.bikeshare.model.repository.AccountRepository.startRide
 import mhel.itu.moapd.bikeshare.model.repository.BikeRepository
 import mhel.itu.moapd.bikeshare.model.repository.RideRepository
 import mhel.itu.moapd.bikeshare.viewmodel.adapter.BikeAdapter
-import java.sql.Time
-import java.time.LocalDateTime
-import java.util.*
+
 
 class BikeListActivity : AppCompatActivity() {
 
@@ -56,29 +54,36 @@ class BikeListActivity : AppCompatActivity() {
             return
         }
 
-        if(BikeRepository.lockBike(b.id)) {
-            val rs = RideRepository.add(
-                Ride(
-                    userId          = 0,
-                    bikeId          = b.id,
-                    name            = b.name,
-                    type            = b.type,
-                    startLocation   = b.location,
-                    startTime       = System.currentTimeMillis(),
-                    rate            = b.rate,
-                    image           = b.image
-                )
-            )
-            if(rs != null) {
-                if(AccountRepository.startRide(user!!.id, rs.id)) {
-                    Toast.makeText(this.applicationContext, "You are now renting ${b.name}", Toast.LENGTH_LONG).show()
-                    setResult(Activity.RESULT_OK)
-                    finish();
-                    return;
-                }
+        MaterialAlertDialogBuilder(this)
+            .setTitle(resources.getString(R.string.startRideTitle))
+            .setMessage(resources.getString(R.string.confirm_start_title))
+            .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
+                // Respond to neutral button press
             }
-        }
-        Toast.makeText(this.applicationContext, "Something went wrong", Toast.LENGTH_LONG).show()
-        return;
+            .setPositiveButton(resources.getString(R.string.startRide)) { dialog, which ->
+                if(BikeRepository.lockBike(b.id)) {
+                    val rs = RideRepository.add(
+                        Ride(
+                            userId          = 0,
+                            bikeId          = b.id,
+                            name            = b.name,
+                            type            = b.type,
+                            startLocation   = b.location,
+                            startTime       = System.currentTimeMillis(),
+                            rate            = b.rate,
+                            image           = b.image
+                        )
+                    )
+                    if(rs != null) {
+                        if(startRide(user!!.id, rs.id)) {
+                            Toast.makeText(this.applicationContext, "You are now renting ${b.name}", Toast.LENGTH_LONG).show()
+                            setResult(Activity.RESULT_OK)
+                            finish()
+                        } else Toast.makeText(this.applicationContext, "Failed to start ride", Toast.LENGTH_LONG).show();
+                    } else Toast.makeText(this.applicationContext, "Failed to create ride", Toast.LENGTH_LONG).show();
+                }
+                else Toast.makeText(this.applicationContext, "Failed to lock bike", Toast.LENGTH_LONG).show();
+            }
+            .show()
     }
 }
