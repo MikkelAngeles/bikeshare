@@ -3,12 +3,21 @@
     <string name="true_button">True</string>
     <string name="false_button">False</string>
     <string name="checkbox_text">Select this option</string>
-    <string name="addBikeButton">Add</string>
+    <string name="addBikeButton">Add funds</string>
     <string name="no_bikes">test</string>
     <string name="bikesHeader">Bikes</string>
     <string name="bikesCount">Displaying 0 results</string>
     <string name="emptyState">No bikes were found, add some and they will be displayed here. </string>
     <string name="addbikeHeader">Add bike</string>
     <string name="addBikeSubtitle">Fill out the form</string>
-    <string name="uploadImageButton">Upload an image</string>
+    <string name="uploadImageButton">Add image</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm_end_ride_text">Are you sure you want to end the ride?</string>
+    <string name="endRide">End ride</string>
+    <string name="endRideTitle">Confirm end ride</string>
+    <string name="confirm">Confirm</string>
+    <string name="addBalanceTitle">Confirm new balance</string>
+    <string name="rideHistoryHeader">Ride history</string>
+    <string name="rideHistoryCoulbLabel">You have 0 rides</string>
+    <string name="rideEmptyState">You haven\'t rented any bikes yet. Once you have rented a bike, it will displayed here.</string>
 </resources>

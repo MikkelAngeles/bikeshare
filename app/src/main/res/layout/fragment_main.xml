@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center|center_horizontal|center_vertical">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
@@ -24,15 +24,16 @@
                 <ImageView
                     android:id="@+id/bannerSplashImage"
                     android:layout_width="match_parent"
-                    android:layout_height="159dp"
-                    android:background="#3C3C3C"
-                    android:tint="#FFFFFF"
+                    android:layout_height="129dp"
+                    android:background="@android:color/background_light"
+                    android:tint="#0288D1"
                     app:srcCompat="@drawable/baseline_account_circle_24" />
 
                 <LinearLayout
+                    android:id="@+id/currentRideContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#878787"
+                    android:background="#388E3C"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -51,29 +52,96 @@
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/currentRideElapsed"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text="Elapsed $time, price $price" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp">
+
+                            <LinearLayout
+                                android:layout_width="90dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="60dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:id="@+id/clockIcon"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="20dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:background="#5C00FF"
+                                        android:backgroundTint="#00FFFFFF"
+                                        android:scaleType="fitCenter"
+                                        app:srcCompat="@drawable/baseline_schedule_24" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/rideElapsedLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="00:00:00" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="80dp"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:id="@+id/userIcon2"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:background="#5C00FF"
+                                        android:backgroundTint="#00FFFFFF"
+                                        android:scaleType="fitCenter"
+                                        app:srcCompat="@drawable/baseline_monetization_on_24" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/ridePriceElapsedLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:text="123 dk" />
+                            </LinearLayout>
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <Button
                         android:id="@+id/endCurrentRideBtn"
+                        style="@style/Widget.AppCompat.Button"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:background="#E53935"
+                        android:backgroundTint="#E53935"
                         android:text="End ride"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="#FFFFFF"
+                        android:textColorHighlight="#FFFFFF"
+                        android:textColorLink="#FFFFFF" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:paddingLeft="20dp"
                     android:paddingTop="20dp"
                     android:paddingBottom="20dp">
 
@@ -85,7 +153,7 @@
 
                         <ImageView
                             android:id="@+id/userIcon"
-                            android:layout_width="50dp"
+                            android:layout_width="25dp"
                             android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:layout_weight="1"
@@ -165,7 +233,7 @@
                             app:srcCompat="@drawable/baseline_account_balance_wallet_24" />
 
                         <LinearLayout
-                            android:layout_width="184dp"
+                            android:layout_width="144dp"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
                             android:padding="5dp">
@@ -188,7 +256,7 @@
                         <Button
                             android:id="@+id/addBalanceButton"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="70dp"
+                            android:layout_width="110dp"
                             android:layout_height="wrap_content"
                             android:text="@string/addBikeButton"
                             android:textSize="14sp" />
@@ -207,41 +275,32 @@
                 android:paddingRight="50dp">
 
                 <Button
+                    android:id="@+id/addBikeButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Register bike "
+                    android:textColor="#FFFFFF" />
+
+                <Button
                     android:id="@+id/viewBikesButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="View available bikes" />
+                    android:text="View available bikes"
+                    android:textColor="#FFFFFF"
+                    />
 
                 <Button
                     android:id="@+id/viewRideHistory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ride history" />
+                    android:text="Ride history"
+                    android:textColor="#FFFFFF"
+                    />
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_gravity="center_horizontal"
-            android:minHeight="30dp"
-            android:orientation="horizontal"
-            android:padding="10dp">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/addBikeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:background="#FFFFFF"
-                android:backgroundTint="#673AB7"
-                android:foregroundTint="#FFFFFF"
-                android:src="@drawable/baseline_add_24"
-                android:tint="#FFFFFF"
-                app:rippleColor="#FFFFFF" />
-        </LinearLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 </ScrollView>

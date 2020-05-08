@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="#80673AB7"
+            android:background="@android:color/holo_blue_dark"
             android:orientation="vertical">
 
             <ImageView
@@ -30,10 +30,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal"
             android:paddingLeft="20dp"
-            android:paddingTop="5dp"
-            android:paddingRight="10dp">
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp">
 
             <LinearLayout
                 android:layout_width="195dp"
@@ -58,11 +60,11 @@
             <Button
                 android:id="@+id/uploadBikeImageBtn"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-                android:layout_width="192dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/uploadImageButton"
                 android:textSize="18sp"
-                app:icon="@drawable/baseline_directions_bike_24" />
+                app:icon="@drawable/baseline_camera_enhance_24" />
 
         </LinearLayout>
 
@@ -70,12 +72,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingLeft="10dp">
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
             <com.google.android.material.textfield.TextInputLayout
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
                 android:hint="Bike name"
                 app:startIconDrawable="@drawable/baseline_directions_bike_24">
 
@@ -91,15 +95,15 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
                 android:hint="Bike type"
                 app:startIconDrawable="@drawable/baseline_build_24">
 
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:id="@+id/bikeTypeEntry"
-                    />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,40 +111,40 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Rate"
+                android:layout_marginBottom="10dp"
+                android:hint=" Hourly rate"
                 app:startIconDrawable="@drawable/baseline_monetization_on_24">
 
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:id="@+id/bikeRateEntry"
-                    />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
                 android:enabled='false'
                 android:hint="Location"
                 app:startIconDrawable="@drawable/baseline_gps_fixed_24">
 
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/locationEntry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:enabled='false'
-                    android:id="@+id/locationEntry"
-                    />
+                    android:enabled='false' />
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <Button
                 android:id="@+id/addBikeSubmitBtn"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Submit"
                 android:textSize="18sp" />

@@ -21,4 +21,8 @@ class CurrentUser : ViewModel() {
         MutableLiveData<Float>()
     }
 
+    val activeRide: MutableLiveData<Long?> by lazy {
+        MutableLiveData<Long?>()
+    }
+
 }

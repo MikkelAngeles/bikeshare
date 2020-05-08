@@ -11,10 +11,10 @@ object BikeRepository {
         return Realm.getDefaultInstance()
     }
 
-    fun findAsync(id : Long?) : Bike {
+    fun find(id : Long?) : Bike? {
         return realm().where<Bike>()
                       .equalTo("id", id)
-                      .findFirstAsync();
+                      .findFirst();
     }
 
     fun add(bike : Bike) : Bike? {
@@ -46,10 +46,27 @@ object BikeRepository {
                       .findAll()
     }
 
-    fun remove(bike: Bike) {
-        val rs = findAsync(bike.id);
+    fun remove(bike: Bike) : Boolean{
+        val rs = find(bike.id)?:return false
         realm().executeTransaction {
             rs.deleteFromRealm();
         }
+        return true;
+    }
+
+    fun lockBike(id: Long?) : Boolean {
+        val rs = find(id)?:return false
+        realm().executeTransaction {
+            rs.isAvailable = false;
+        }
+        return true;
+    }
+
+    fun unlock(id: Long?) : Boolean {
+        val rs = find(id)?:return false
+        realm().executeTransaction {
+            rs.isAvailable = true;
+        }
+        return true;
     }
 }

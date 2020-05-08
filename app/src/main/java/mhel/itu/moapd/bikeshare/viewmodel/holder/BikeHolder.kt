@@ -11,10 +11,9 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_add_bike.*
 import mhel.itu.moapd.bikeshare.lib.ConversionManager.formatCurrencyToDkk
 import mhel.itu.moapd.bikeshare.lib.ImageManager
-import mhel.itu.moapd.bikeshare.viewmodel.activity.AddBikeActivity
+import java.util.*
 
 class BikeHolder (
     inflater : LayoutInflater,
@@ -30,9 +29,12 @@ class BikeHolder (
     private var rentBtn:        Button      = itemView.findViewById(R.id.rentBikeButton)
 
     fun bind(bike: Bike) {
+
+
+
         name.text       = bike.name
         type.text       = bike.type
-        location.text   = "100 m";
+        location.text   = "${Random().nextInt(10000)} m" //Random distance just for fun. Alternatively use GpsHandler to calculate distance between two locations. Seems overkill though.
         rate.text       = "${formatCurrencyToDkk(bike.rate?:0.0f)} / hour"
 
         availability.text = if(bike.isAvailable) "Available" else "Occupied";

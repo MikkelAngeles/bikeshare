@@ -53,4 +53,36 @@ object AccountRepository {
             rs.deleteFromRealm();
         }
     }
+
+    fun update(account : Account) : Boolean {
+        val rs = find(account.id) ?: return false
+        realm().executeTransaction {
+            rs.userName        = account.userName
+            rs.rides           = account.rides
+            rs.balance         = account.balance
+            rs.activeRide      = account.activeRide
+        }
+        return true;
+    }
+
+    fun startRide(id : Long?, rideId : Long?) : Boolean {
+        val rs = find(id) ?: return false
+        realm().executeTransaction {
+            rs.activeRide      = rideId
+            rs.rides           = rs.rides + 1
+        }
+        return true;
+    }
+
+    fun endRide(id : Long?, price : Float?) : Boolean {
+        val rs = find(id) ?: return false
+        realm().executeTransaction {
+            rs.balance         = rs.balance!!.minus(price!!)
+            rs.activeRide      = null
+        }
+        return true;
+    }
+
+
+
 }

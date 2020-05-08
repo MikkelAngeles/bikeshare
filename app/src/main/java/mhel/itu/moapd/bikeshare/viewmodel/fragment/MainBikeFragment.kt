@@ -6,19 +6,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_main.*
 import mhel.itu.moapd.bikeshare.R
 import mhel.itu.moapd.bikeshare.model.CurrentUser
 import mhel.itu.moapd.bikeshare.model.entity.Account
 import mhel.itu.moapd.bikeshare.model.repository.AccountRepository
+import mhel.itu.moapd.bikeshare.model.repository.BikeRepository
+import mhel.itu.moapd.bikeshare.model.repository.RideRepository
 import mhel.itu.moapd.bikeshare.viewmodel.activity.AddBalanceActivity
 import mhel.itu.moapd.bikeshare.viewmodel.activity.AddBikeActivity
 import mhel.itu.moapd.bikeshare.viewmodel.activity.BikeListActivity
 import mhel.itu.moapd.bikeshare.viewmodel.activity.RideHistoryActivity
+import mhel.itu.moapd.bikeshare.lib.ConversionManager
+import java.util.*
 
 
 class MainBikeFragment : Fragment() {
@@ -30,13 +36,17 @@ class MainBikeFragment : Fragment() {
     }
 
     private lateinit var userViewModel : CurrentUser
+    private lateinit var timer : Timer
+    private var startTime : Long = 0
+    private var rate : Float = 0f
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        userViewModel = ViewModelProviders.of(this).get(CurrentUser::class.java);
+        userViewModel = ViewModelProviders.of(this).get(CurrentUser::class.java)
         this.registerObservers()
         this.registerEventListeners()
-
+        timer = Timer()
         //Secure default account is populated. Add more if you like.
-        val rs = AccountRepository.find(userViewModel.id.value?:0);
+        val rs = AccountRepository.find(userViewModel.id.value?:0)
         if(rs == null) AccountRepository.add(
             Account(
                 userName    = "Mikkel Helmersen",
@@ -45,34 +55,111 @@ class MainBikeFragment : Fragment() {
             )
         )
 
-        val user = AccountRepository.find(userViewModel.id.value?:0);
+        val user = AccountRepository.find(userViewModel.id.value?:0)
         if(user != null) {
             userViewModel.name.postValue(user.userName)
             userViewModel.rides.postValue(user.rides)
             userViewModel.balance.postValue(user.balance)
+            userViewModel.activeRide.postValue(user.activeRide)
+        }
+
+        this.endCurrentRideBtn.setOnClickListener {
+            MaterialAlertDialogBuilder(view.context)
+                .setTitle(resources.getString(R.string.endRideTitle))
+                .setMessage(resources.getString(R.string.confirm_end_ride_text))
+                .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
+                    // Respond to neutral button press
+                }
+                .setPositiveButton(resources.getString(R.string.endRide)) { dialog, which ->
+
+                    val usr = AccountRepository.find(userViewModel.id.value?:0)
+                    if(usr != null) {
+                        val ride = RideRepository.find(usr.activeRide)
+                        if(ride != null) {
+                            val endLocation = ""
+                            val endTime = System.currentTimeMillis();
+                            val price = 0f;
+                            val time = (endTime.minus(ride.startTime ?: 0))
+
+                            RideRepository.endRide(
+                                ride.id,
+                                endLocation,
+                                endTime,
+                                price,
+                                time
+                            )
+                            BikeRepository.unlock(ride.bikeId)
+                            AccountRepository.endRide(usr.id, price)
+
+                            userViewModel.activeRide.postValue(null)
+                            userViewModel.balance.postValue(usr.balance);
+                            Toast.makeText(view.context, "Ride ended", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                    Toast.makeText(view.context, "Something went wrong", Toast.LENGTH_LONG).show()
+                }
+                .show()
+        }
+    }
+
+    private fun setTimerTask() {
+        timer = Timer()
+        timer.schedule(object : TimerTask() {
+            override fun run() {
+                activity!!.runOnUiThread(Runnable {
+                    updateElapsed()
+                })
+            }
+        }, 1000, 1000)
+    }
+
+    private fun updateElapsed() {
+        val delta = System.currentTimeMillis() - startTime;
+        this.rideElapsedLabel.text = ConversionManager.msToTimeString(delta)
+        this.ridePriceElapsedLabel.text = ConversionManager.priceElapsed(delta, rate)
+    }
+
+    private fun setActiveRide(rideId : Long?) {
+        if(rideId != null) {
+            this.currentRideContainer.visibility = View.VISIBLE
+            val ride = RideRepository.find(rideId)
+            this.startTime = ride!!.startTime!!
+            this.rate = ride.rate?:0f;
+            this.currentRideLabel.text = "Renting ${ride.name}"
+            this.rideElapsedLabel.text = "${ride!!.startTime}"
+            this.ridePriceElapsedLabel.text = rate.toString()
+            setTimerTask()
+        } else {
+            this.currentRideContainer.visibility = View.GONE
+            timer.cancel()
         }
     }
 
     private fun registerEventListeners() {
         this.addBikeButton.setOnClickListener {
-            this.startActivity(Intent(this.activity, AddBikeActivity::class.java));
+            this.startActivity(Intent(this.activity, AddBikeActivity::class.java))
         }
         this.viewBikesButton.setOnClickListener {
-            this.startActivity(Intent(this.activity, BikeListActivity::class.java));
+            this.startActivityForResult(Intent(this.activity, BikeListActivity::class.java), 10001)
         }
         this.viewRideHistory.setOnClickListener {
-            this.startActivity(Intent(this.activity, RideHistoryActivity::class.java));
+            this.startActivity(Intent(this.activity, RideHistoryActivity::class.java))
         }
         this.addBalanceButton.setOnClickListener {
-            this.startActivityForResult(Intent(this.activity, AddBalanceActivity::class.java), 10001);
+            this.startActivityForResult(Intent(this.activity, AddBalanceActivity::class.java), 10001)
         }
+
     }
 
     private fun registerObservers() {
         userViewModel.name.observe(this, Observer { newName -> this.userNameLabel.text = newName; })
         userViewModel.rides.observe(this,  Observer { newCount -> this.ridesCountLabel.text = newCount.toString(); })
         userViewModel.balance.observe(this,  Observer { newBalance ->
-            this.balanceValue.text = newBalance.toString();
+            this.balanceValue.text = ConversionManager.formatCurrencyToDkk(newBalance)
+        })
+
+        userViewModel.activeRide.observe(this,  Observer { newRide ->
+            setActiveRide(newRide)
         })
     }
 

@@ -10,13 +10,13 @@ import android.location.LocationManager
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 
-class GpsManager(val activity: Activity) : LocationListener {
+class GpsManager(val activity: FragmentActivity) : LocationListener {
 
     var locationManager: LocationManager? = this.activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
     var lastLocation: Location? = null
     var currentLocation: Location? = null
-
 
     fun estimateDistance(loc : Location) : String {
         val myPos = requestLocationUpdates() ?: return "Unknown distance";

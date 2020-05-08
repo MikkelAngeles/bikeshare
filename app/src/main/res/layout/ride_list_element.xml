@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/bike_list_element"
+    android:id="@+id/ride_list_element"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
@@ -28,9 +28,9 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/bikeImage"
+                    android:id="@+id/rideListImage"
                     android:layout_width="match_parent"
-                    android:layout_height="95dp"
+                    android:layout_height="110dp"
                     android:layout_gravity="center"
                     android:background="#003700B3"
                     android:cropToPadding="true"
@@ -38,11 +38,11 @@
                     app:srcCompat="@drawable/baseline_directions_bike_24" />
 
                 <TextView
-                    android:id="@+id/bikeListPriceLabel"
+                    android:id="@+id/rideListPriceLabel"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:gravity="center"
-                    android:text="1230 DKK / HR" />
+                    android:text="123 DKK" />
             </LinearLayout>
 
             <LinearLayout
@@ -53,7 +53,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="85dp"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -63,17 +63,16 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:id="@+id/imageView"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_marginRight="10dp"
                             app:srcCompat="@drawable/baseline_directions_bike_24" />
 
                         <TextView
-                            android:id="@+id/bikeName"
+                            android:id="@+id/rideName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="BikeName"
+                            android:text="RideName"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
@@ -86,20 +85,62 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:id="@+id/imageView"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_marginRight="10dp"
                             app:srcCompat="@drawable/baseline_build_24" />
 
                         <TextView
-                            android:id="@+id/bikeType"
+                            android:id="@+id/rideType"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Mountain bike"
                             android:textSize="14sp" />
 
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="10dp"
+                            app:srcCompat="@drawable/baseline_location_on_24" />
+
+                        <TextView
+                            android:id="@+id/rideListFrom"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="0.1 km"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="10dp"
+                            app:srcCompat="@drawable/baseline_where_to_vote_24" />
+
+                        <TextView
+                            android:id="@+id/rideListTo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="0.1 km"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -112,56 +153,19 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_marginRight="10dp"
-                            app:srcCompat="@drawable/baseline_location_on_24" />
+                            app:srcCompat="@drawable/baseline_schedule_24" />
 
                         <TextView
-                            android:id="@+id/bikeLocation"
+                            android:id="@+id/rideListTime"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:maxLines="1"
-                            android:text="0.1 km"
+                            android:text="1 hr 23 min 12 sec"
                             android:textSize="14sp" />
                     </LinearLayout>
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/bikeAvailability"
-                                android:layout_width="165dp"
-                                android:layout_height="wrap_content"
-                                android:text="Available"
-                                android:textColor="#E53935"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                        <Button
-                            android:id="@+id/rentBikeButton"
-                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:enabled="true"
-                            android:text="Rent" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

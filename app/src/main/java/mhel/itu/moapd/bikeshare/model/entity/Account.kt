@@ -10,5 +10,6 @@ open class Account (
     var id:         Long?       = null,
     var userName:   String?     = null,
     var rides:      Int         = 0,
-    var balance:    Float?      = 0.0f
+    var balance:    Float?      = 0.0f,
+    var activeRide: Long?       = null
 ) : RealmModel
