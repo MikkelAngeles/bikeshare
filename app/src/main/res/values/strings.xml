@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">bikeshare</string>
+    <string name="true_button">True</string>
+    <string name="false_button">False</string>
+    <string name="checkbox_text">Select this option</string>
+    <string name="addBikeButton">Add</string>
+    <string name="no_bikes">test</string>
+    <string name="bikesHeader">Bikes</string>
+    <string name="bikesCount">Displaying 0 results</string>
+    <string name="emptyState">No bikes were found, add some and they will be displayed here. </string>
+    <string name="addbikeHeader">Add bike</string>
+    <string name="addBikeSubtitle">Fill out the form</string>
+    <string name="uploadImageButton">Upload an image</string>
 </resources>

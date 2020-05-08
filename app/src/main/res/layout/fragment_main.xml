@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center|center_horizontal|center_vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/bannerSplashImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="159dp"
+                    android:background="#3C3C3C"
+                    android:tint="#FFFFFF"
+                    app:srcCompat="@drawable/baseline_account_circle_24" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#878787"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/currentRideLabel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Currently renting BikeName"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/currentRideElapsed"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="Elapsed $time, price $price" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/endCurrentRideBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="#E53935"
+                        android:text="End ride"
+                        android:textColor="#FFFFFF" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/userIcon"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:background="#5C00FF"
+                            android:backgroundTint="#00FFFFFF"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/baseline_account_circle_24" />
+
+                        <LinearLayout
+                            android:layout_width="254dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/userLabel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="User"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/userNameLabel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Mikkel Helmersen" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/ridesIcon"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/baseline_directions_bike_24" />
+
+                        <LinearLayout
+                            android:layout_width="254dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/ridesLabel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Rides"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/ridesCountLabel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="123" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/balanceIcon"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/baseline_account_balance_wallet_24" />
+
+                        <LinearLayout
+                            android:layout_width="184dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/balanceLabel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Account balance"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/balanceValue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="$ 123" />
+
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/addBalanceButton"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/addBikeButton"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp">
+
+                <Button
+                    android:id="@+id/viewBikesButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="View available bikes" />
+
+                <Button
+                    android:id="@+id/viewRideHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ride history" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:minHeight="30dp"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addBikeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:background="#FFFFFF"
+                android:backgroundTint="#673AB7"
+                android:foregroundTint="#FFFFFF"
+                android:src="@drawable/baseline_add_24"
+                android:tint="#FFFFFF"
+                app:rippleColor="#FFFFFF" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

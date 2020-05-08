@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".viewmodel.activity.AddBikeActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="#80673AB7"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/bikeUploadImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#00DCDCDC"
+                app:srcCompat="@drawable/baseline_directions_bike_24" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingTop="5dp"
+            android:paddingRight="10dp">
+
+            <LinearLayout
+                android:layout_width="195dp"
+                android:layout_height="80dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/addBikeHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/addbikeHeader"
+                    android:textSize="36sp" />
+
+                <TextView
+                    android:id="@+id/addBikeSubTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/addBikeSubtitle" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/uploadBikeImageBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                android:layout_width="192dp"
+                android:layout_height="wrap_content"
+                android:text="@string/uploadImageButton"
+                android:textSize="18sp"
+                app:icon="@drawable/baseline_directions_bike_24" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="10dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Bike name"
+                app:startIconDrawable="@drawable/baseline_directions_bike_24">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/bikeNameEntry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Bike type"
+                app:startIconDrawable="@drawable/baseline_build_24">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bikeTypeEntry"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Rate"
+                app:startIconDrawable="@drawable/baseline_monetization_on_24">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bikeRateEntry"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:enabled='false'
+                android:hint="Location"
+                app:startIconDrawable="@drawable/baseline_gps_fixed_24">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled='false'
+                    android:id="@+id/locationEntry"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <Button
+                android:id="@+id/addBikeSubmitBtn"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
