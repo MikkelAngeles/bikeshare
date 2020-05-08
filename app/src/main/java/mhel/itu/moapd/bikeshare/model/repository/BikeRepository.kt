@@ -26,6 +26,9 @@ object BikeRepository {
             tmp.location    = bike.location
             tmp.rate        = bike.rate
             tmp.isAvailable = bike.isAvailable
+            tmp.image       = bike.image
+            tmp.lon         = bike.lon
+            tmp.lat         = bike.lat
         }
         bike.id = index;
         return bike;

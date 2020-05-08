@@ -11,7 +11,8 @@ object ImageManager {
         return stream.toByteArray()
     }
 
-    fun byteArrayToBitmap(byteArray: ByteArray): Bitmap {
+    fun byteArrayToBitmap(byteArray: ByteArray?): Bitmap? {
+        if(byteArray == null) return null;
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
     }
 }

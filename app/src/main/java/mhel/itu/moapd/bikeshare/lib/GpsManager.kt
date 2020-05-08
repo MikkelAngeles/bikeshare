@@ -17,6 +17,15 @@ class GpsManager(val activity: Activity) : LocationListener {
     var lastLocation: Location? = null
     var currentLocation: Location? = null
 
+
+    fun estimateDistance(loc : Location) : String {
+        val myPos = requestLocationUpdates() ?: return "Unknown distance";
+        val tmp = FloatArray(3);
+        Location.distanceBetween(myPos.longitude, myPos.latitude, loc.longitude, loc.latitude, tmp)
+        val dist = tmp[0];
+        return dist.toString();
+    }
+
     fun requestLocationUpdates(): Location? {
         if (ContextCompat.checkSelfPermission(this.activity, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED) {
@@ -47,9 +56,9 @@ class GpsManager(val activity: Activity) : LocationListener {
     companion object {
         fun locationToString(loc : Location?) : String {
             return if (loc != null)
-                "Lat: ${loc.latitude}, Lon: ${loc.longitude}"
+                "${loc.latitude}, ${loc.longitude}"
             else
-                "Could not find location"
+                "Location unknown"
         }
     }
 }

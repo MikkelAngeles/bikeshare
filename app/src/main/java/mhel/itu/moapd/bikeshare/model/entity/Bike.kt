@@ -13,5 +13,7 @@ open class Bike (
     var image:          ByteArray?  = ByteArray(0),
     var isAvailable:    Boolean     = true,
     var location:       String?     = "",
+    var lon:            Float?      = null,
+    var lat:            Float?      = null,
     var rate:           Float?      = null
 ) : RealmModel

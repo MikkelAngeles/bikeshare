@@ -1,11 +1,12 @@
 package mhel.itu.moapd.bikeshare.lib
 
+import android.text.format.DateFormat
+import java.math.BigDecimal
+import java.math.RoundingMode
+import java.text.NumberFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.absoluteValue
-import java.math.BigDecimal
-import java.math.RoundingMode
-import android.text.format.DateFormat
 
 object ConversionManager {
 
@@ -29,4 +30,12 @@ object ConversionManager {
     fun format(date: Date) : String {
         return DateFormat.format("MMM d, yyyy", date) as String
     }
+
+    fun formatCurrencyToDkk(rate: Float) : String {
+        val nf: NumberFormat = NumberFormat.getCurrencyInstance()
+        nf.setMaximumFractionDigits(0)
+        nf.setCurrency(Currency.getInstance("DKK"))
+        return nf.format(rate) as String
+    }
+
 }

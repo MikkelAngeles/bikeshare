@@ -8,8 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_main.*
 import mhel.itu.moapd.bikeshare.R
+import mhel.itu.moapd.bikeshare.model.CurrentUser
 import mhel.itu.moapd.bikeshare.model.entity.Account
 import mhel.itu.moapd.bikeshare.model.repository.AccountRepository
 import mhel.itu.moapd.bikeshare.viewmodel.activity.AddBalanceActivity
@@ -26,12 +29,14 @@ class MainBikeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
-
+    private lateinit var userViewModel : CurrentUser
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        this.registerEventListeners();
+        userViewModel = ViewModelProviders.of(this).get(CurrentUser::class.java);
+        this.registerObservers()
+        this.registerEventListeners()
 
         //Secure default account is populated. Add more if you like.
-        val rs = AccountRepository.find(0);
+        val rs = AccountRepository.find(userViewModel.id.value?:0);
         if(rs == null) AccountRepository.add(
             Account(
                 userName    = "Mikkel Helmersen",
@@ -40,15 +45,11 @@ class MainBikeFragment : Fragment() {
             )
         )
 
-        val user = AccountRepository.find(0);
+        val user = AccountRepository.find(userViewModel.id.value?:0);
         if(user != null) {
-            this.userNameLabel.text = user.userName.toString();
-            this.ridesCountLabel.text = user.rides.toString();
-            this.balanceValue.text = user.balance.toString();
-        } else {
-            this.userNameLabel.text = "Anonymous user";
-            this.ridesCountLabel.text = "0";
-            this.balanceValue.text = "0";
+            userViewModel.name.postValue(user.userName)
+            userViewModel.rides.postValue(user.rides)
+            userViewModel.balance.postValue(user.balance)
         }
     }
 
@@ -59,14 +60,31 @@ class MainBikeFragment : Fragment() {
         this.viewBikesButton.setOnClickListener {
             this.startActivity(Intent(this.activity, BikeListActivity::class.java));
         }
-
         this.viewRideHistory.setOnClickListener {
             this.startActivity(Intent(this.activity, RideHistoryActivity::class.java));
         }
-
         this.addBalanceButton.setOnClickListener {
-            this.startActivity(Intent(this.activity, AddBalanceActivity::class.java));
+            this.startActivityForResult(Intent(this.activity, AddBalanceActivity::class.java), 10001);
         }
+    }
+
+    private fun registerObservers() {
+        userViewModel.name.observe(this, Observer { newName -> this.userNameLabel.text = newName; })
+        userViewModel.rides.observe(this,  Observer { newCount -> this.ridesCountLabel.text = newCount.toString(); })
+        userViewModel.balance.observe(this,  Observer { newBalance ->
+            this.balanceValue.text = newBalance.toString();
+        })
+    }
+
+    @Override
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 10001 && resultCode == Activity.RESULT_OK) {
+            val ft: FragmentTransaction = fragmentManager!!.beginTransaction()
+            ft.detach(this).attach(this).commit()
+        }
+
     }
 
 }

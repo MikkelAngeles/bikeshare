@@ -14,6 +14,6 @@ class Main : Application() {
             RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
                 .build());
-
+        //Realm.getDefaultInstance().deleteAll()
     }
 }
