@@ -29,12 +29,9 @@ class BikeHolder (
     private var rentBtn:        Button      = itemView.findViewById(R.id.rentBikeButton)
 
     fun bind(bike: Bike) {
-
-
-
         name.text       = bike.name
         type.text       = bike.type
-        location.text   = "${Random().nextInt(10000)} m" //Random distance just for fun. Alternatively use GpsHandler to calculate distance between two locations. Seems overkill though.
+        location.text   = bike.location//"${Random().nextInt(10000)} m" //Random distance just for fun. Alternatively use GpsHandler to calculate distance between two locations. Seems overkill though.
         rate.text       = "${formatCurrencyToDkk(bike.rate?:0.0f)} / hour"
 
         availability.text = if(bike.isAvailable) "Available" else "Occupied";

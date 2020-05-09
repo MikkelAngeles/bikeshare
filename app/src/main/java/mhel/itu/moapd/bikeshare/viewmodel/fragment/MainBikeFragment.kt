@@ -19,14 +19,12 @@ import mhel.itu.moapd.bikeshare.model.entity.Account
 import mhel.itu.moapd.bikeshare.model.repository.AccountRepository
 import mhel.itu.moapd.bikeshare.model.repository.BikeRepository
 import mhel.itu.moapd.bikeshare.model.repository.RideRepository
-import mhel.itu.moapd.bikeshare.viewmodel.activity.AddBalanceActivity
-import mhel.itu.moapd.bikeshare.viewmodel.activity.AddBikeActivity
-import mhel.itu.moapd.bikeshare.viewmodel.activity.BikeListActivity
-import mhel.itu.moapd.bikeshare.viewmodel.activity.RideHistoryActivity
 import mhel.itu.moapd.bikeshare.lib.ConversionManager
 import mhel.itu.moapd.bikeshare.lib.ConversionManager.formatCurrencyToDkk
 import mhel.itu.moapd.bikeshare.lib.ConversionManager.priceElapsed
 import mhel.itu.moapd.bikeshare.lib.ConversionManager.timeDelta
+import mhel.itu.moapd.bikeshare.lib.GpsManager
+import mhel.itu.moapd.bikeshare.viewmodel.activity.*
 import java.util.*
 
 
@@ -50,6 +48,7 @@ class MainBikeFragment : Fragment() {
         this.registerObservers()
         this.registerEventListeners()
         timer = Timer()
+
         //Secure default account is populated. Add more if you like.
         val rs = AccountRepository.find(userViewModel.id.value?:0)
         if(rs == null) AccountRepository.add(
@@ -88,7 +87,10 @@ class MainBikeFragment : Fragment() {
         if(usr != null) {
             val ride = RideRepository.find(usr.activeRide)
             if(ride != null) {
-                val endLocation = ""
+                val gps = GpsManager(this.activity!!)
+                gps.requestLocationUpdates()
+
+                val endLocation = gps.getNearestAddress()
                 val endTime = System.currentTimeMillis();
                 val time    = timeDelta(endTime, ride.startTime)
                 val price   = priceElapsed(time?:0, ride.rate?:0f)

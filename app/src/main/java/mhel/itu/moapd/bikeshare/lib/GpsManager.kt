@@ -4,13 +4,13 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
+import android.location.*
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import java.io.IOException
+import java.util.*
 
 class GpsManager(val activity: FragmentActivity) : LocationListener {
 
@@ -24,6 +24,26 @@ class GpsManager(val activity: FragmentActivity) : LocationListener {
         Location.distanceBetween(myPos.longitude, myPos.latitude, loc.longitude, loc.latitude, tmp)
         val dist = tmp[0];
         return dist.toString();
+    }
+
+    fun getNearestAddress() : String {
+        val rs = requestLocationUpdates() ?: return "Unknown"
+        return getAddress(rs.longitude, rs.latitude);
+    }
+
+    fun getAddress(longitude: Double, latitude: Double): String {
+        val geocoder = Geocoder(activity, Locale.getDefault())
+        val stringBuilder = StringBuilder()
+        try {
+            val addresses: List<Address> = geocoder.getFromLocation(latitude, longitude, 1)
+            if (addresses.isNotEmpty()) {
+                val address: Address = addresses[0]
+                stringBuilder.apply{
+                    append(address.getAddressLine(0)).append("\n")
+                }
+            } else return "No address found"
+        } catch (ex: IOException) { ex.printStackTrace() }
+        return stringBuilder.toString()
     }
 
     fun requestLocationUpdates(): Location? {

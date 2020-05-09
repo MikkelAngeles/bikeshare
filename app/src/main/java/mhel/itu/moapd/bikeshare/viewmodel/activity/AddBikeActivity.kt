@@ -43,7 +43,7 @@ class AddBikeActivity : AppCompatActivity() {
         this.rate       = this.findViewById(R.id.bikeRateEntry);
         this.image      = this.findViewById(R.id.bikeUploadImageView);
 
-        this.location.text = GpsManager.locationToString(this.gpsManager.currentLocation);
+        this.location.text = gpsManager.getNearestAddress()
 
         if (savedInstanceState != null) {
             this.isRegisterBikeButtonEnabled = savedInstanceState.getBoolean("isRegisterBikeButtonEnabled")
