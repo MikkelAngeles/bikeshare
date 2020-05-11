@@ -175,7 +175,7 @@
                                 android:id="@+id/userLabel"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="User"
+                                android:text="@string/user"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -210,7 +210,7 @@
                                 android:id="@+id/ridesLabel"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Rides"
+                                android:text="@string/rides"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -245,7 +245,7 @@
                                 android:id="@+id/balanceLabel"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Account balance"
+                                android:text="@string/account_balance"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -281,14 +281,14 @@
                     android:id="@+id/addBikeButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Register bike "
+                    android:text="@string/register_bike"
                     android:textColor="#FFFFFF" />
 
                 <Button
                     android:id="@+id/viewBikesButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="View available bikes"
+                    android:text="@string/view_available_bikes"
                     android:textColor="#FFFFFF"
                     />
 
@@ -296,7 +296,7 @@
                     android:id="@+id/viewRideHistory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ride history"
+                    android:text="@string/ride_history"
                     android:textColor="#FFFFFF"
                     />
 

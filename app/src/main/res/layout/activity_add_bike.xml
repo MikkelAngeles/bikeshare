@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
@@ -21,7 +21,7 @@
             <ImageView
                 android:id="@+id/bikeUploadImageView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:background="#00DCDCDC"
                 app:srcCompat="@drawable/baseline_directions_bike_24" />
@@ -80,7 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="10dp"
-                android:hint="Bike name"
+                android:hint="@string/bike_name"
                 app:startIconDrawable="@drawable/baseline_directions_bike_24">
 
 
@@ -96,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="10dp"
-                android:hint="Bike type"
+                android:hint="@string/bike_type"
                 app:startIconDrawable="@drawable/baseline_build_24">
 
 
@@ -112,7 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="10dp"
-                android:hint=" Hourly rate"
+                android:hint="@string/hourly_rate"
                 app:startIconDrawable="@drawable/baseline_monetization_on_24">
 
 
@@ -128,7 +128,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="10dp"
                 android:enabled='false'
-                android:hint="Location"
+                android:hint="@string/location"
                 app:startIconDrawable="@drawable/baseline_gps_fixed_24">
 
 
@@ -146,7 +146,7 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Submit"
+                android:text="@string/submit"
                 android:textSize="18sp" />
 
         </LinearLayout>

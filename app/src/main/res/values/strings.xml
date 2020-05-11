@@ -23,4 +23,23 @@
     <string name="startRideTitle">Confirm start ride</string>
     <string name="confirm_start_title">You are about to start renting a bike. Please confirm</string>
     <string name="startRide">Let\'s go!</string>
+    <string name="location">Location</string>
+    <string name="hourly_rate">Hourly rate</string>
+    <string name="submit">Submit</string>
+    <string name="bike_name">Bike name</string>
+    <string name="bike_type">Bike type</string>
+    <string name="pseudoCardNumber">**** **** **** 1337</string>
+    <string name="pseudoCardExpDate">12/5/2020</string>
+    <string name="pseudoCardSecretCode">012</string>
+    <string name="vasa">Vasa</string>
+    <string name="panda_express">Panda Express</string>
+    <string name="coronacoin">CoronaCoin</string>
+    <string name="mooster_card">Mooster Card</string>
+    <string name="user">User</string>
+    <string name="rides">Rides</string>
+    <string name="account_balance">Account balance</string>
+    <string name="register_bike">Register bike</string>
+    <string name="view_available_bikes">View available bikes</string>
+    <string name="ride_history">Ride history</string>
+    <string name="add_balance">Add balance</string>
 </resources>

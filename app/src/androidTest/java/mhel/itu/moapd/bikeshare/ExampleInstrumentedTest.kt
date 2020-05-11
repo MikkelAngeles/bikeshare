@@ -2,6 +2,7 @@ package mhel.itu.moapd.bikeshare
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import mhel.itu.moapd.bikeshare.lib.GpsManager
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,4 +22,6 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("mhel.itu.moapd.bikeshare", appContext.packageName)
     }
+
+
 }

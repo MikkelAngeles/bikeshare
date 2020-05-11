@@ -13,9 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BikeShare">
-        <activity android:name=".viewmodel.activity.AddBalanceActivity" ></activity>
+        <activity android:name=".viewmodel.activity.AddBalanceActivity" />
         <activity android:name=".viewmodel.activity.RideHistoryActivity" />
-        <activity android:name=".viewmodel.activity.CheckBikeActivity" />
         <activity android:name=".viewmodel.activity.AddBikeActivity" />
         <activity android:name=".viewmodel.activity.BikeListActivity" />
         <activity android:name=".viewmodel.activity.MainBikeActivity">
